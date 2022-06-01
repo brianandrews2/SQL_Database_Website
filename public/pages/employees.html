@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Employees</title>
+</head>
+<body>
+    <!--Page Header-->
+    <div class="container">
+        <h1 class="page-header">
+            Cat Oasis
+        </h1>
+    </div>
+
+    <!--Nav Bar-->
+    <nav>
+        <ul>
+            <a href="/">
+                <li>Home</li>
+            </a>
+            <a href="/cats">
+                <li>Cats</li>
+            </a>
+            <a href="/employees">
+                <li class="active">Employees</li>
+            </a>
+            <a href="/foods">
+                <li>Foods</li>
+            </a>
+             <a href="/toys">
+                 <li>Toys</li>
+                </a>
+            <a href="/cat_beds">
+                <li>Cat Beds</li>
+            </a>
+            <a href="/foods_cats">
+                <li>Food Assignments</li>
+            </a>
+        </ul>
+    </nav>
+
+    <!--Page Description-->
+    <h2>Manage the employees currently volunteering at Cat Oasis:</h2>
+
+    <!--ADD EMPLOYEE FORM-->
+    <form class="form" id="addemployee" action="/employees" method="post">
+        <h2>Add Employee</h2>
+        <fieldset>
+            <label for="first_name">First Name*</label>
+            <input type="text" id="first_name" name="first_name" placeholder="Enter First Name"/>
+
+            <label for="last_name">Last Name*</label>
+            <input type="text" id="last_name" name="last_name" placeholder="Enter Last Name"/>
+
+            <label for="work_email">Work Email*</label>
+            <input type="text" id="work_email" name="work_email" placeholder="Enter Work Email"/>
+
+            <label for="personal_email">Personal Email*</label>
+            <input type="text" id="personal_email" name="personal_email" placeholder="Enter Personal Email"/>
+
+            <label for="phone_number">Phone Number*</label>
+            <input type="text" id="phone_number" name="phone_number" placeholder="Enter Phone Number"/>
+
+            <label for="starting_date">Starting Date*</label>
+            <input type="date" id="starting_date" name="starting_date" placeholder="Enter Starting Date"/>
+
+            <input type="submit" value="Submit"/>
+        </fieldset>
+
+    </form>
+
+    
+    <!--Delete Employee Table-->
+    <table>
+        <thead>
+        <caption>Delete Employee From Database</caption>
+            <tr>
+                <th>Employee ID*</th> 
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="number"></td>
+                <td class="button"><button>Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!--Update Employee Table-->
+    <table>
+        <thead>
+        <caption>Update Employee - enter employee ID of employee being updated then enter fields to update</caption>
+            <tr>
+                <th>Employee ID*</th>
+            </tr>
+            <tr>
+                <td><input type="number"></td>
+            </tr>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Work Email</th>
+                <th>Personal Email</th>
+                <th>Phone Number</th>
+                <th>Starting Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><input type="email"></td>
+                <td><input type="email"></td>
+                <td><input type="tel"></td>
+                <td><input type="date"></td>
+                <td class="button"><button>Update</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+        <!--Results Table-->
+        <table class="results-table">
+            <thead>
+            <caption class>Employees</caption>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Work Email</th>
+                    <th>Personal Email</th>
+                    <th>Phone Number</th>
+                    <th>Starting Date</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+
+            </tbody>
+        </table>
+
+    <!--Get Request-->
+    <script>
+        var employee_array = []
+        
+        //GET all Employees
+        $.ajax({
+            method:"GET",
+            url: 'http://flip1.engr.oregonstate.edu:9876/get_employees',
+            success:function(response) {
+                employee_array = response
+                buildTable(employee_array); 
+            }
+        })
+
+        //Build the Results table
+        function buildTable(data) {
+            var table = document.getElementById('table-body')
+
+            for (var i = 0; i < data.length; i++) {
+                var row = `<tr>
+                                <td>${data[i].employee_id}</td>
+                                <td>${data[i].first_name}</td>
+                                <td>${data[i].last_name}</td>
+                                <td>${data[i].work_email}</td>
+                                <td>${data[i].personal_email}</td>
+                                <td>${data[i].phone_number}</td>
+                                <td>${data[i].starting_date}</td>
+                            </tr>`
+                table.innerHTML += row
+
+            }
+        }
+    </script>
+</body>
+</html>

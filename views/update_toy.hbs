@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Toys</title>
+</head>
+<body>
+    <!--Page Header-->
+    <div class="container">
+        <h1 class="page-header">
+            Cat Oasis
+        </h1>
+    </div>
+
+            <!--Nav Bar-->
+    <nav>
+        <ul>
+            <a href="/">
+                <li>Home</li>
+            </a>
+            <a href="/cats">
+                <li>Cats</li>
+            </a>
+            <a href="/employees">
+                <li>Employees</li>
+            </a>
+            <a href="/foods">
+                <li>Foods</li>
+            </a>
+             <a href="/toys">
+                 <li class="active">Toys</li>
+                </a>
+            <a href="/cat_beds">
+                <li>Cat Beds</li>
+            </a>
+            <a href="/foods_cats">
+                <li>Foods Cats</li>
+            </a>
+        </ul>
+    </nav>
+
+    {{#each toy}}
+        <h1>Update {{name}}:</h1>
+
+    <form class="form" id="update-toy" action="/toys/{{toy_id}}" method="post">
+        <fieldset>
+        Contains Catnip: <select type="text" name="contains_catnip" value="{{contains_catnip}}">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+            </select>
+        <br>
+        Name: <input type="text" name="name" value="{{name}}">
+        <br>
+        Cost: <input type="number" step="0.01" id="cost" name="cost" value={{cost}}>
+        <br>
+    {{/each}}
+        Cat ID: <select type="text" id="cat_id" name="cat_id" value={{cat_id}}>
+            {{#each cat}}
+                <option value="{{cat_id}}">{{cat_id}} {{name}}</option>
+            {{/each}}
+                <option value=""></option>
+            {{#each cats}}
+                <option value="{{cat_id}}">{{cat_id}} {{name}}</option>
+            {{/each}}
+            </select>
+        <br>
+
+
+        <input type="submit" value="Update"/>
+        </fieldset>
+    </form>
+</body>

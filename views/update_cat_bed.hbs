@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Cat Beds</title>
+</head>
+<body>
+    <!--Page Header-->
+    <div class="container">
+        <h1 class="page-header">
+            Cat Oasis
+        </h1>
+    </div>
+
+    <!--Nav Bar-->
+    <nav>
+        <ul>
+            <a href="/">
+                <li>Home</li>
+            </a>
+            <a href="/cats">
+                <li>Cats</li>
+            </a>
+            <a href="/employees">
+                <li>Employees</li>
+            </a>
+            <a href="/foods">
+                <li>Foods</li>
+            </a>
+             <a href="/toys">
+                 <li>Toys</li>
+                </a>
+            <a href="/cat_beds">
+                <li class="active">Cat Beds</li>
+            </a>
+            <a href="/foods_cats">
+                <li>Foods Cats</li>
+            </a>
+        </ul>
+    </nav>
+
+    {{#each cat_bed}}
+        <h1>Update {{bed_type}}:</h1>
+
+    <form class="form" id="update-cat-bed" action="/cat_beds/{{cat_bed_id}}" method="post">
+        <fieldset>
+        Type: <input type="text" name="bed_type" value="{{bed_type}}">
+        <br>
+    {{/each}}
+        Cat: <select type="text" id="cat_id" name="cat_id" value={{cat_id}}>
+            {{#each cat}}
+                <option value="{{cat_id}}">{{cat_id}} {{name}}</option>
+            {{/each}}
+                <option value=""></option>
+            {{#each cats}}
+                <option value="{{cat_id}}">{{cat_id}} {{name}}</option>
+            {{/each}}
+            </select>
+        <br>
+        {{#each cat_bed}}
+        Cost: <input type="number" id="cost" step="0.01" name="cost" value={{cost}}>
+        {{/each}}
+        <br>
+
+        <input type="submit" value="Update"/>
+        </fieldset>
+    </form>
+
+    </body>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Employees</title>
+</head>
+<body>
+    <!--Page Header-->
+    <div class="container">
+        <h1 class="page-header">
+            Cat Oasis
+        </h1>
+    </div>
+
+    <!--Nav Bar-->
+    <nav>
+        <ul>
+            <a href="/">
+                <li>Home</li>
+            </a>
+            <a href="/cats">
+                <li>Cats</li>
+            </a>
+            <a href="/employees">
+                <li class="active">Employees</li>
+            </a>
+            <a href="/foods">
+                <li>Foods</li>
+            </a>
+             <a href="/toys">
+                 <li>Toys</li>
+                </a>
+            <a href="/cat_beds">
+                <li>Cat Beds</li>
+            </a>
+            <a href="/foods_cats">
+                <li>Foods Cats</li>
+            </a>
+        </ul>
+    </nav>
+
+    {{#each employee}}
+    <h1>Update {{first_name}} {{last_name}}:</h1>
+
+    <form class="form" id="update-employee" action="/employees/{{employee_id}}" method="post">
+        <fieldset>
+        First Name: <input type="text" name="first_name" value="{{first_name}}">
+        <br>
+        Last Name: <input type="text" name="last_name" value="{{last_name}}">
+        <br>
+        Work Email: <input type="text" id="work_email" name="work_email" value={{work_email}}>
+        <br>
+        Personal Email: <input type="text" id="personal_email" name="personal_email" value={{personal_email}}>
+        <br>
+        Phone Number: <input type="text" id="phone_number" name="phone_number" value={{phone_number}}>
+        <br>
+        Starting Date: <input type="date" id="starting_date" name="starting_date" value={{starting_date}}>
+    {{/each}}
+
+        <input type="submit" value="Update"/>
+        </fieldset>
+    </form>

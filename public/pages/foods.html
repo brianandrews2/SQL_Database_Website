@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Foods</title>
+</head>
+<body>
+    <!--Page Header-->
+    <div class="container">
+        <h1 class="page-header">
+            Cat Oasis
+        </h1>
+    </div>
+
+    <!--Nav Bar-->
+    <nav>
+        <ul>
+            <a href="/">
+                <li>Home</li>
+            </a>
+            <a href="/cats">
+                <li>Cats</li>
+            </a>
+            <a href="/employees">
+                <li>Employees</li>
+            </a>
+            <a href="/foods">
+                <li class="active">Foods</li>
+            </a>
+             <a href="/toys">
+                 <li>Toys</li>
+                </a>
+            <a href="/cat_beds">
+                <li>Cat Beds</li>
+            </a>
+            <a href="/foods_cats">
+                <li>Food Assignments</li>
+            </a>
+        </ul>
+    </nav>
+
+    <!--Page Description-->
+    <h2>Manage the foods available for our cats:</h2>
+
+    <!--ADD FOOD FORM-->
+    <form class="form" id="addfood" action="/foods" method="post">
+        <h2>Add Food</h2>
+        <fieldset>
+            <label for="dry_or_wet">Dry or Wet*</label>
+            <select type="text" id="dry_or_wet" name="dry_or_wet">
+                <option value=""></option>
+                <option value="Dry">Dry</option>
+                <option value="Wet">Wet</option>
+            </select>
+
+            <label for="meal_or_treat">Meal or Treat*</label>
+            <select type="text" id="meal_or_treat" name="meal_or_treat">
+                <option value=""></option>
+                <option value="Meal">Meal</option>
+                <option value="Treat">Treat</option>
+            </select>
+
+            <label for="brand">Brand*</label>
+            <input type="text" id="brand" name="brand" placeholder="Enter Brand"/>
+
+            <label for="flavor">Flavor*</label>
+            <input type="text" id="flavor" name="flavor" placeholder="Enter Flavor"/>
+
+            <label for="requires_prescription">Requires Prescription*</label>
+            <select type="text" id="requires_prescription" name="requires_prescription">
+                <option value=""></option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="cost">Cost</label>
+            <input type="number" id="cost" name="cost" placeholder="Enter Cost"/>
+
+            <input type="submit" value="Submit"/>
+        </fieldset>
+
+    </form>
+
+    <!--Delete Food Table-->
+    <table>
+        <thead>
+        <caption>Delete Food From Database</caption>
+            <tr>
+                <th>Food ID*</th> 
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="number"></td>
+                <td class="button"><button>Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <!--Update Food Table-->
+    <table>
+        <thead>
+        <caption>Update Food - enter Food ID of food being updated then enter fields to update</caption>
+            <tr>
+                <th>Food ID*</th>
+            </tr>
+            <tr>
+                <td><input type="number"></td>
+            </tr>
+            <tr>
+                <th>Dry/Wet</th>
+                <th>Meal/Treat</th>
+                <th>Brand</th>
+                <th>Flavor</th>
+                <th>Prescribed</th>
+                <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><select>
+                    <option value=""></option>
+                    <option value="Dry">Dry</option>
+                    <option value="Wet">Wet</option>
+                    </select>
+                </td>
+                <td><select>
+                    <option value=""></option>
+                    <option value="Meal">Meal</option>
+                    <option value="Treat">Treat</option>
+                    </select>
+                </td>
+                <td><input type="text"></td>
+                <td><input type="text"></td>
+                <td><select>
+                    <option value=""></option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    </select>
+                </td>
+                <td><input type="number"></td>
+                <td class="button"><button>Update</button>
+            </tr>
+        </tbody>
+    </table>
+ 
+    <!--Results Table-->
+    <table class="results-table">
+        <thead>
+        <caption>Foods</caption>
+            <tr>
+                <th>Food ID</th>
+                <th>Dry/Wet</th>
+                <th>Meal/Treat</th>
+                <th>Brand</th>
+                <th>Flavor</th>
+                <th>Prescribed</th>
+                <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+ 
+        </tbody>
+    </table>
+
+    <!--Get Request-->
+    <script>
+        var food_array = []
+        
+        //GET all foods
+        $.ajax({
+            method:"GET",
+            url: 'http://flip1.engr.oregonstate.edu:9876/get_foods',
+            success:function(response) {
+                food_array = response
+                buildTable(food_array);
+            }
+        })
+
+        //Build the Results table
+        function buildTable(data) {
+            var table = document.getElementById('table-body')
+
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].requires_prescription === 0) {
+                    data[i].requires_prescription = "No"
+                } else {
+                    data[i].requires_prescription = "Yes"
+                }
+                var row = `<tr>
+                                <td>${data[i].food_id}</td>
+                                <td>${data[i].dry_or_wet}</td>
+                                <td>${data[i].meal_or_treat}</td>
+                                <td>${data[i].brand}</td>
+                                <td>${data[i].flavor}</td>
+                                <td>${data[i].requires_prescription}</td>
+                                <td>${data[i].cost}</td>
+                           </tr>`
+                table.innerHTML += row
+
+            }
+        }
+    </script>
+
+</body>
+</html>

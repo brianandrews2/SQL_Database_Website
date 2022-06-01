@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <title>Cats</title>
+</head>
+
+<!--Page Header-->
+    <div class="container">
+        <h1 class="page-header">
+            Cat Oasis
+        </h1>
+    </div>
+
+        <!--Nav Bar-->
+        <nav>
+            <ul>
+                <a href="/">
+                    <li>Home</li>
+                </a>
+                <a href="/cats">
+                    <li class="active">Cats</li>
+                </a>
+                <a href="/employees">
+                    <li>Employees</li>
+                </a>
+                <a href="/foods">
+                    <li>Foods</li>
+                </a>
+                 <a href="/toys">
+                     <li>Toys</li>
+                    </a>
+                <a href="/cat_beds">
+                    <li>Cat Beds</li>
+                </a>
+                <a href="/foods_cats">
+                    <li>Foods Cats</li>
+                </a>
+            </ul>
+        </nav>
+
+<body>
+
+    {{#each cat}}
+    <h1>Update {{name}}:</h1>
+
+    <form class="form" id="update-cat" action="/cats/{{cat_id}}" method="post">
+        <fieldset>
+        Name: <input type="text" name="name" value="{{name}}">
+        <br>
+        Breed: <input type="text" name="breed" value="{{breed}}">
+        <br>
+        Birthday: <input type="date" id="birth_date" name="birth_date" value={{birth_date}}>
+        <br>
+        Gender: <select type="text" name="gender" value={{gender}}>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+        <br>
+    {{/each}}
+        Caretaker Employee ID: <select name="employee_id" id="employee_id"> 
+            {{#each employees}}
+                <option value="{{employee_id}}">{{first_name}} {{last_name}}</option>
+            {{/each}}
+        </select>
+        <br>
+
+        <input type="submit" value="Update"/>
+        </fieldset>
+    </form>
+
+
+</body>

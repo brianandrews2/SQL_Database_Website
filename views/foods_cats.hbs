@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Food_Assignments</title>
+</head>
+<body>
+    <!--Page Header-->
+    <div class="container">
+        <h1 class="page-header">
+            Cat Oasis
+        </h1>
+    </div>
+
+    <!--Nav Bar-->
+    <nav>
+        <ul>
+            <a href="/">
+                <li>Home</li>
+            </a>
+            <a href="/cats">
+                <li>Cats</li>
+            </a>
+            <a href="/employees">
+                <li>Employees</li>
+            </a>
+            <a href="/foods">
+                <li>Foods</li>
+            </a>
+             <a href="/toys">
+                 <li>Toys</li>
+                </a>
+            <a href="/cat_beds">
+                <li>Cat Beds</li>
+            </a>
+            <a href="/foods_cats">
+                <li class="active">Foods Cats</li>
+            </a>
+        </ul>
+    </nav>
+
+    <!--Page Description-->
+    <h2>Assign which foods that each cat can eat:</h2>
+
+    <!--ADD FOODS_CATS FORM-->
+    <form class="form" id="add-foods-cats-form-ajax">
+        <h2>Add Food Assignment</h2>
+        <fieldset>
+            <label for="cat_id">Cat*</label>
+            <select type="number" id="cat_id" name="cat_id">
+                <option value="">Select Cat</option>
+                {{#each cats}}
+                <option value="{{this.cat_id}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+
+            <label for="food_id">Food*</label>
+            <select type="number" id="food_id" name="food_id">
+                <option value="">Select Food</option>
+                {{#each foods}}
+                <option value="{{this.food_id}}">{{this.food_id}} {{this.brand}}/{{this.dry_or_wet}}/{{this.flavor}}/{{this.meal_or_treat}}</option>
+                {{/each}}
+            </select>
+
+            <input type="submit" value="Submit"/>
+        </fieldset>
+    </form>
+    <script src="./js/add_foods_cats.js"></script>
+
+    {{!-- Search by name --}}
+    <form class="form" id="search-food-cat-html" method='GET' action='/foods_cats'>
+        <h2>Search</h2>
+        <fieldset>
+
+        <label for="input-name">Search by Cat Name: </label>
+        <input type="text" name="name" id="input-name-html-search">
+
+        <input type="submit">
+
+        <a href='/foods_cats'><button>Reset</button></a>
+
+        </fieldset>
+    </form>
+
+    <!--Results Table-->
+    <table class="results-table" id="foods-cats-table">
+        <thead>
+        <caption>Food Assignments</caption>
+            <tr>
+                <th>Cat ID</th>
+                <th>Cat Name</th>
+                <th>Food ID</th>
+                <th>Dry/Wet</th>
+                <th>Meal/Treat</th>
+                <th>Brand</th>
+                <th>Flavor</th>
+                <th>Prescribed?</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr data-value-cat={{this.cat_id}} data-value-food={{this.food_id}}>
+                <td>{{this.cat_id}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.food_id}}</td>
+                <td>{{this.dry_or_wet}}</td>
+                <td>{{this.meal_or_treat}}</td>
+                <td>{{this.brand}}</td>
+                <td>{{this.flavor}}</td>
+                <td>{{this.requires_prescription}}</td>
+                <td><button><a href="/update_foods_cats/?cat_id={{this.cat_id}}&food_id={{this.food_id}}">Update</a></button></td>
+                <td><button onClick="deleteFoodsCats({{this.cat_id}}, {{this.food_id}})">Delete</button></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <script src="./js/delete_foods_cats.js"></script>
+
+
+
+</body>
+</html>

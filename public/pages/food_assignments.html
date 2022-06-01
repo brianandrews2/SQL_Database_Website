@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Food_Assignments</title>
+</head>
+<body>
+    <!--Page Header-->
+    <div class="container">
+        <h1 class="page-header">
+            Cat Oasis
+        </h1>
+    </div>
+
+    <!--Nav Bar-->
+    <nav>
+        <ul>
+            <a href="/">
+                <li>Home</li>
+            </a>
+            <a href="/cats">
+                <li>Cats</li>
+            </a>
+            <a href="/employees">
+                <li>Employees</li>
+            </a>
+            <a href="/foods">
+                <li>Foods</li>
+            </a>
+             <a href="/toys">
+                 <li>Toys</li>
+                </a>
+            <a href="/cat_beds">
+                <li>Cat Beds</li>
+            </a>
+            <a href="/foods_cats">
+                <li class="active">Food Assignments</li>
+            </a>
+        </ul>
+    </nav>
+
+    <!--Page Description-->
+    <h2>Assign which foods that each cat can eat:</h2>
+
+    <!--ADD FOODS_CATS FORM-->
+    <form class="form" id="addfoodscats" action="/foods_cats" method="post">
+        <h2>Add Food Assignment</h2>
+        <fieldset>
+            <label for="cat_id">Cat ID*</label>
+            <input type="number" id="cat_id" name="cat_id" placeholder="Enter Cat ID"/>
+
+            <label for="food_id">Food ID*</label>
+            <input type="number" id="food_id" name="food_id" placeholder="Enter Food ID"/>
+
+            <input type="submit" value="Submit"/>
+        </fieldset>
+    </form>
+
+    <!--Delete Food Assignment Table-->
+    <table>
+        <thead>
+        <caption>Delete Food Assignment</caption>
+            <tr>
+                <th>Cat ID*</th>
+                <th>Food ID*</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="number"></td>
+                <td><input type="number"></td>
+                <td class="button"><button>Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <!--Update Food Assignment Table-->
+    <table>
+        <thead>
+        <caption>Update Food Assignment - Update Food ID assigned to Cat ID</caption>
+            <tr>
+                <td>Cat/Food IDs Being Updated:</td>
+            </tr>
+            <tr>
+                <th>Cat ID*</th>
+                <th>Food ID*</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="number"></td>
+                <td><input type="number"></td>
+            </tr>
+            <tr>
+                <td>Update To:</td>
+            </tr>
+            <tr>
+                <th>Cat ID</th>
+                <th>Food ID</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="number"></td>
+                <td><input type="number"></td>
+                <td class="button"><button>Update</button></td>
+            </tr>
+        </tbody>
+    </table>
+ 
+    <!--Search Food Table-->
+    <table>
+        <thead>
+        <caption>Search for Food Assignment</caption>
+            <tr>
+                <th>Cat ID</th>
+                <th>Food ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="number"></td>
+                <td><input type="number"></td>
+                <td class="button"><button>Search</button>
+            </tr>
+        </tbody>
+
+    </table>
+
+    <!--Results Table-->
+    <table class="results-table">
+        <thead>
+        <caption>Food Assignments</caption>
+            <tr>
+                <th>Cat ID</th>
+                <th>Cat Name</th>
+                <th>Food ID</th>
+                <th>Dry/Wet</th>
+                <th>Meal/Treat</th>
+                <th>Brand</th>
+                <th>Flavor</th>
+                <th>Prescribed?</th>
+            </tr>
+        </thead>
+        <tbody id="table-body">
+
+        </tbody>
+    </table>
+
+    <!--Get Request-->
+    <script>
+        var foods_cats_array = []
+        
+        //GET all cats
+        $.ajax({
+            method:"GET",
+            url: 'http://flip1.engr.oregonstate.edu:9876/get_foods_cats',
+            success:function(response) {
+                foods_cats_array = response
+                buildTable(foods_cats_array);
+                console.log(foods_cats_array)
+            }
+        })
+
+        //Build the Results table
+        function buildTable(data) {
+            var table = document.getElementById('table-body')
+
+            for (var i = 0; i < data.length; i++) {
+                var row = `<tr>
+                                <td>${data[i].cat_id}</td>
+                                <td>${data[i].name}</td>
+                                <td>${data[i].food_id}</td>
+                                <td>${data[i].dry_or_wet}</td>
+                                <td>${data[i].meal_or_treat}</td>
+                                <td>${data[i].brand}</td>
+                                <td>${data[i].flavor}</td>
+                                <td>${data[i].requires_prescription}</td>
+
+                           </tr>`
+                table.innerHTML += row
+
+            }
+        }
+    </script>
+
+</body>
+</html>

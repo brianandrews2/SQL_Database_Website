@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Food_Assignments</title>
+</head>
+
+    <!--Page Header-->
+    <div class="container">
+        <h1 class="page-header">
+            Cat Oasis
+        </h1>
+    </div>
+
+
+    <!--Nav Bar-->
+    <nav>
+        <ul>
+            <a href="/">
+                <li>Home</li>
+            </a>
+            <a href="/cats">
+                <li>Cats</li>
+            </a>
+            <a href="/employees">
+                <li>Employees</li>
+            </a>
+            <a href="/foods">
+                <li>Foods</li>
+            </a>
+             <a href="/toys">
+                 <li>Toys</li>
+                </a>
+            <a href="/cat_beds">
+                <li>Cat Beds</li>
+            </a>
+            <a href="/foods_cats">
+                <li class="active">Foods Cats</li>
+            </a>
+        </ul>
+    </nav>
+
+
+<body>
+    {{#each foods_cats}}
+    <h1>Update Food Assigned to Cat ID {{cat_id}}.  Currently assigned Food ID {{food_id}}:</h1>
+
+    <form class="form" id="update-foods-cats" action="/update_foods_cats/?cat_id={{cat_id}}&food_id={{food_id}}" method="post">
+    {{/each}}
+        <fieldset>
+            Food: <select type="number" name="food_id" id="food_id" value={{food_id}}>
+                {{#each foods}}
+                <option value={{food_id}}>{{food_id}} {{brand}} {{dry_or_wet}} {{flavor}} {{meal_or_treat}}</option>
+                {{/each}}
+            </select>
+            <input type="submit" value="Update"/>
+        </fieldset>
+    </form>
+
+
+
+</body> 

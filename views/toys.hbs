@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Toys</title>
+</head>
+<body>
+    <!--Page Header-->
+    <div class="container">
+        <h1 class="page-header">
+            Cat Oasis
+        </h1>
+    </div>
+
+            <!--Nav Bar-->
+    <nav>
+        <ul>
+            <a href="/">
+                <li>Home</li>
+            </a>
+            <a href="/cats">
+                <li>Cats</li>
+            </a>
+            <a href="/employees">
+                <li>Employees</li>
+            </a>
+            <a href="/foods">
+                <li>Foods</li>
+            </a>
+             <a href="/toys">
+                 <li class="active">Toys</li>
+                </a>
+            <a href="/cat_beds">
+                <li>Cat Beds</li>
+            </a>
+            <a href="/foods_cats">
+                <li>Foods Cats</li>
+            </a>
+        </ul>
+    </nav>
+    
+    <!--Page Description-->
+    <h2>Manage the toys available for our cats:</h2>
+
+    <!--ADD TOY FORM-->
+    <form class="form" id="add-toy-form-ajax">
+        <h2>Add Toy</h2>
+        <fieldset>
+            <label for="contains_catnip">Contains Catnip*</label>
+            <select type="text" id="contains_catnip" name="contains_catnip">
+                <option value=""></option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="name">Name*</label>
+            <input type="text" id="name" name="name" placeholder="Enter Toy Name"/>
+
+            <label for="cost">Cost</label>
+            <input type="number" step="0.01" id="cost" name="cost" placeholder="Enter Cost"/>
+
+            <label for="cat_id">Cat</label>
+            <select type="number" id="cat_id" name="cat_id">
+                <option value="">Select Cat</option>
+                {{#each cats}}
+                <option value="{{this.cat_id}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+
+            <input type="submit" value="Add"/>
+        </fieldset>
+    </form>
+    <script src="./js/add_toy.js"></script>
+
+
+    {{! Search by Toy ID}}
+    <form class="form" id="search-toy-html" method='GET' action='/toys'>
+        <h2>Search</h2>
+        <fieldset>
+
+        <label for="input-toy-id">Search by Toy ID: </label>
+        <input type="number" name="toy_id" id="input-toy-id-html-search">
+
+        <input type="submit">
+
+        <a href='/toys'><button>Reset</button></a>
+
+        </fieldset>
+    </form>
+
+    <!--Results Table-->
+    <table class="results-table" id="toy-table">
+        <thead>
+        <caption>Toys</caption>
+            <tr>
+                <th>Toy ID</th>
+                <th>Contains Catnip</th>
+                <th>Name</th>
+                <th>Cost</th>
+                <th>Cat ID</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr data-value={{this.toy_id}}>
+                <td>{{this.toy_id}}</td>
+                <td>{{this.contains_catnip}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.cost}}</td>
+                <td>{{this.cat_id}}</td>
+                <td><button><a href="/toys/{{this.toy_id}}">Update</a></button></td>
+                <td><button onclick="deleteToy({{this.toy_id}})">Delete</button></td>
+            </tr>
+            {{/each}}
+
+        </tbody>
+    </table>
+    <script src="./js/delete_toy.js"></script>
+
+</body>
+</html>

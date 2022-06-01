@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Foods</title>
+</head>
+<body>
+    <!--Page Header-->
+    <div class="container">
+        <h1 class="page-header">
+            Cat Oasis
+        </h1>
+    </div>
+
+    <!--Nav Bar-->
+    <nav>
+        <ul>
+            <a href="/">
+                <li>Home</li>
+            </a>
+            <a href="/cats">
+                <li>Cats</li>
+            </a>
+            <a href="/employees">
+                <li>Employees</li>
+            </a>
+            <a href="/foods">
+                <li class="active">Foods</li>
+            </a>
+             <a href="/toys">
+                 <li>Toys</li>
+                </a>
+            <a href="/cat_beds">
+                <li>Cat Beds</li>
+            </a>
+            <a href="/foods_cats">
+                <li>Foods Cats</li>
+            </a>
+        </ul>
+    </nav>
+
+    {{#each food}}
+    <h1>Update {{brand}} {{dry_or_wet}} {{flavor}} {{meal_or_treat}}:</h1>
+
+    <form class="form" id="update-food" action="/foods/{{food_id}}" method="post">
+        <fieldset>
+        Dry or Wet: <select type="text" name="dry_or_wet" value={{dry_or_wet}}>
+                    <option value="Dry">Dry</option>
+                    <option value="Wet">Wet</option>
+                </select>
+        <br>
+        Meal or Treat: <select type="text" name="meal_or_treat" value={{meal_or_treat}}>
+            <option value="Meal">Meal</option>
+            <option value="Treat">Treat</option>
+        </select>
+        <br>
+        Brand: <input type="text" id="brand" name="brand" value={{brand}}>
+        <br>
+        Flavor: <input type="text" id="flavor" name="flavor" value={{flavor}}>
+        <br>
+        Prescribed: <select type="text" name="requires_prescription" value={{requires_prescription}}>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+        <br>
+        Cost: <input type="number" id="cost" step="0.01" name="cost" value={{cost}}>
+    {{/each}}
+
+        <input type="submit" value="Update"/>
+        </fieldset>
+    </form>
+
+    </body>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Foods</title>
+</head>
+<body>
+    <!--Page Header-->
+    <div class="container">
+        <h1 class="page-header">
+            Cat Oasis
+        </h1>
+    </div>
+
+    <!--Nav Bar-->
+    <nav>
+        <ul>
+            <a href="/">
+                <li>Home</li>
+            </a>
+            <a href="/cats">
+                <li>Cats</li>
+            </a>
+            <a href="/employees">
+                <li>Employees</li>
+            </a>
+            <a href="/foods">
+                <li class="active">Foods</li>
+            </a>
+             <a href="/toys">
+                 <li>Toys</li>
+                </a>
+            <a href="/cat_beds">
+                <li>Cat Beds</li>
+            </a>
+            <a href="/foods_cats">
+                <li>Foods Cats</li>
+            </a>
+        </ul>
+    </nav>
+
+    <!--Page Description-->
+    <h2>Manage the foods available for our cats:</h2>
+
+    <!--ADD FOOD FORM-->
+    <form class="form" id="add-food-form-ajax">
+        <h2>Add Food</h2>
+        <fieldset>
+            <label for="dry_or_wet">Dry or Wet*</label>
+            <select type="text" id="dry_or_wet" name="dry_or_wet">
+                <option value=""></option>
+                <option value="Dry">Dry</option>
+                <option value="Wet">Wet</option>
+            </select>
+
+            <label for="meal_or_treat">Meal or Treat*</label>
+            <select type="text" id="meal_or_treat" name="meal_or_treat">
+                <option value=""></option>
+                <option value="Meal">Meal</option>
+                <option value="Treat">Treat</option>
+            </select>
+
+            <label for="brand">Brand*</label>
+            <input type="text" id="brand" name="brand" placeholder="Enter Brand"/>
+
+            <label for="flavor">Flavor*</label>
+            <input type="text" id="flavor" name="flavor" placeholder="Enter Flavor"/>
+
+            <label for="requires_prescription">Requires Prescription*</label>
+            <select type="text" id="requires_prescription" name="requires_prescription">
+                <option value=""></option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <label for="cost">Cost</label>
+            <input type="number" step="0.01" id="cost" name="cost" placeholder="Enter Cost"/>
+
+            <input type="submit" value="Submit"/>
+        </fieldset>
+    </form>
+        <script src="./js/add_food.js"></script>
+
+
+    {{!-- Search by Food Id --}}
+    <form class="form" id="search-food-html" method='GET' action='/foods'>
+        <h2>Search</h2>
+        <fieldset>
+
+        <label for="input-name">Search by Food ID: </label>
+        <input type="text" name="food_id" id="input-food-id-html-search">
+
+        <input type="submit">
+
+        <a href='/foods'><button>Reset</button></a>
+
+        </fieldset>
+    </form>
+ 
+    {{!-- Results table --}}
+    <table class="results-table" id="food-table">
+        <thead>
+        <caption>Foods</caption>
+            <tr>
+                <th>Food ID</th>
+                <th>Dry/Wet</th>
+                <th>Meal/Treat</th>
+                <th>Brand</th>
+                <th>Flavor</th>
+                <th>Prescribed</th>
+                <th>Cost</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            {{#each data}}
+            <tr data-value={{this.food_id}}>
+                <td>{{this.food_id}}</td>
+                <td>{{this.dry_or_wet}}</td>
+                <td>{{this.meal_or_treat}}</td>
+                <td>{{this.brand}}</td>
+                <td>{{this.flavor}}</td>
+                <td>{{this.requires_prescription}}</td>
+                <td>{{this.cost}}</td>
+                <td><button><a href="/foods/{{this.food_id}}">Update</a></button></td>
+                <td><button onclick="deleteFood({{this.food_id}})">Delete</button></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <script src="./js/delete_food.js"></script>
+
+</body>
+</html>

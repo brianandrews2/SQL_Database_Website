@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <title>Cats</title>
+</head>
+
+<!--Page Header-->
+    <div class="container">
+        <h1 class="page-header">
+            Cat Oasis
+        </h1>
+    </div>
+
+        <!--Nav Bar-->
+        <nav>
+            <ul>
+                <a href="/">
+                    <li>Home</li>
+                </a>
+                <a href="/cats">
+                    <li class="active">Cats</li>
+                </a>
+                <a href="/employees">
+                    <li>Employees</li>
+                </a>
+                <a href="/foods">
+                    <li>Foods</li>
+                </a>
+                 <a href="/toys">
+                     <li>Toys</li>
+                    </a>
+                <a href="/cat_beds">
+                    <li>Cat Beds</li>
+                </a>
+                <a href="/foods_cats">
+                    <li>Foods Cats</li>
+                </a>
+            </ul>
+        </nav>
+
+<body>
+
+    <!--Page Description-->
+    <h2>Manage the cats currently at Cat Oasis:</h2>
+
+    {{!-- Form to add a record to the table  --}}
+    <form class="form" id="add-cat-form-ajax">
+        <h2>Add Cat</h2>
+        <fieldset>
+            <label for="name">Name*</label>
+            <input type="text" id="name" name="name" placeholder="Enter Name"/>
+
+            <label for="breed">Breed</label>
+            <input type="text" id="breed" name="breed" placeholder="Enter Breed"/>
+
+            <label for="birth_date">Birth Date</label>
+            <input type="date" id="birth_date" name="birth_date" placeholder="Enter Birth Date"/>
+
+            <label for="gender">Gender*</label>
+            <select type="text" id="gender" name="gender">
+                <option value=""></option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+            </select>
+
+            <label for="employee_id">Caretaker Employee*</label>
+            <select type="number" id="employee_id" name="employee_id">
+                <option value="">Select Caretaker Employee</option>
+                {{#each employees}}
+                <option value="{{this.employee_id}}">{{this.first_name}}</option>
+                {{/each}}
+            </select>
+
+            <input type="submit" value="Add"/>
+        </fieldset>
+    </form>
+    <script src="./js/add_cat.js"></script>
+
+    {{!-- Search by name --}}
+
+    <form class="form" id="search-cat-html" method='GET' action='/cats'>
+        <h2>Search</h2>
+        <fieldset>
+
+        <label for="input-name">Search by Name: </label>
+        <input type="text" name="name" id="input-name-html-search">
+
+        <input type="submit">
+
+        <a href='/cats'><button>Reset</button></a>
+
+        </fieldset>
+    </form>
+
+
+    {{!-- Results table --}}
+    <table class ="results-table" id="cat-table">
+        <caption>Cats</caption>
+
+        {{!-- Header section --}}
+        <thead>
+
+            {{!-- For just the first row, we print each key of the row object as a header cell so we
+            know what each column means when the page renders --}}
+            <tr>
+    {{!--             {{#each data.[0]}}
+                <th>
+                    {{@key}}
+                </th>
+                {{/each}} --}}
+                <th>
+                    Cat ID
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Breed
+                </th>
+                <th>
+                    Birthday
+                </th>
+                <th>
+                    Gender
+                </th>
+                <th>
+                    Caretaker Employee ID
+                </th>
+                <th>
+                    Update
+                </th>
+                <th>
+                    Delete
+                </th>
+            </tr>
+        </thead>
+
+        {{!-- Body section --}}
+        <tbody>
+
+            {{!-- For each row, print the cat_id, name, breed, birth_date, gender, employee_id in order --}}
+            {{#each data}}
+            <tr data-value={{this.cat_id}}>
+                <td>{{this.cat_id}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.breed}}</td>
+                <td>{{this.birth_date}}</td>
+                <td>{{this.gender}}</td>
+                <td>{{this.employee_id}}</td>
+                <td><button><a href="/cats/{{this.cat_id}}">Update</a></button></td>
+                <td><button onclick="deleteCat({{this.cat_id}})">Delete</button></td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <script src="./js/delete_cat.js"></script>
+
+
+</body>

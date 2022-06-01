@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Employees</title>
+</head>
+<body>
+    <!--Page Header-->
+    <div class="container">
+        <h1 class="page-header">
+            Cat Oasis
+        </h1>
+    </div>
+
+    <!--Nav Bar-->
+    <nav>
+        <ul>
+            <a href="/">
+                <li>Home</li>
+            </a>
+            <a href="/cats">
+                <li>Cats</li>
+            </a>
+            <a href="/employees">
+                <li class="active">Employees</li>
+            </a>
+            <a href="/foods">
+                <li>Foods</li>
+            </a>
+             <a href="/toys">
+                 <li>Toys</li>
+                </a>
+            <a href="/cat_beds">
+                <li>Cat Beds</li>
+            </a>
+            <a href="/foods_cats">
+                <li>Foods Cats</li>
+            </a>
+        </ul>
+    </nav>
+
+    <!--Page Description-->
+    <h2>Manage the employees currently volunteering at Cat Oasis:</h2>
+
+    <!--ADD EMPLOYEE FORM-->
+    <form class="form" id="add-employee-form-ajax">
+        <h2>Add Employee</h2>
+        <fieldset>
+            <label for="first_name">First Name*</label>
+            <input type="text" id="first_name" name="first_name" placeholder="Enter First Name"/>
+
+            <label for="last_name">Last Name*</label>
+            <input type="text" id="last_name" name="last_name" placeholder="Enter Last Name"/>
+
+            <label for="work_email">Work Email*</label>
+            <input type="text" id="work_email" name="work_email" placeholder="Enter Work Email"/>
+
+            <label for="personal_email">Personal Email*</label>
+            <input type="text" id="personal_email" name="personal_email" placeholder="Enter Personal Email"/>
+
+            <label for="phone_number">Phone Number*</label>
+            <input type="text" id="phone_number" name="phone_number" placeholder="Enter Phone Number"/>
+
+            <label for="starting_date">Starting Date*</label>
+            <input type="date" id="starting_date" name="starting_date" placeholder="Enter Starting Date"/>
+
+            <input type="submit" value="Add"/>
+        </fieldset>
+
+    </form>
+        <script src="./js/add_employee.js"></script>
+
+    
+    {{!-- Search by First Name--}}
+    <form class="form" id="search-employee-html" method="GET" action="/employees">
+        <h2>Search</h2>
+        <fieldset>
+            <label for="input-first-name">Search by First Name</label>
+            <input type="text" name="first_name" id="input-first-name-html-search">
+            <input type="submit">
+            <a href="/employees"><button>Reset</button></a>
+        </fieldset>
+    </form>
+
+    <!--Results Table-->
+    <table class="results-table" id="employee-table">
+        <thead>
+        <caption class>Employees</caption>
+            <tr>
+                <th>Employee ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Work Email</th>
+                <th>Personal Email</th>
+                <th>Phone Number</th>
+                <th>Starting Date</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr data-value={{this.employee_id}}>
+                <td>{{this.employee_id}}</td>
+                <td>{{this.first_name}}</td>
+                <td>{{this.last_name}}</td>
+                <td>{{this.work_email}}</td>
+                <td>{{this.personal_email}}</td>
+                <td>{{this.phone_number}}</td>
+                <td>{{this.starting_date}}</td>
+                <td><button><a href="/employees/{{employee_id}}">Update</a></button></td>
+                <td><button onClick="deleteEmployee({{this.employee_id}})">Delete</button></td>
+            </tr>
+            {{/each}}
+
+        </tbody>
+    </table>
+    <script src="./js/delete_employee.js"></script>
+
+</body>
+</html>

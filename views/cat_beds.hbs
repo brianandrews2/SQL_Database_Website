@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../css/app.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Cat Beds</title>
+</head>
+<body>
+    <!--Page Header-->
+    <div class="container">
+        <h1 class="page-header">
+            Cat Oasis
+        </h1>
+    </div>
+
+    <!--Nav Bar-->
+    <nav>
+        <ul>
+            <a href="/">
+                <li>Home</li>
+            </a>
+            <a href="/cats">
+                <li>Cats</li>
+            </a>
+            <a href="/employees">
+                <li>Employees</li>
+            </a>
+            <a href="/foods">
+                <li>Foods</li>
+            </a>
+             <a href="/toys">
+                 <li>Toys</li>
+                </a>
+            <a href="/cat_beds">
+                <li class="active">Cat Beds</li>
+            </a>
+            <a href="/foods_cats">
+                <li>Foods Cats</li>
+            </a>
+        </ul>
+    </nav>
+
+    <!--Page Description-->
+    <h2>Manage the beds available for our cats:</h2>
+
+
+    <!--ADD CAT_BED FORM-->
+    <form class="form" id="add-cat-bed-form-ajax">
+        <h2>Add Cat Bed</h2>
+        <fieldset>
+            <label for="bed_type">Bed Type*</label>
+            <input type="text" id="bed_type" name="bed_type" placeholder="Enter Bed Type"/>
+
+            <label for="cat_id">Cat</label>
+            <select type="number" id="cat_id" name="cat_id">
+                <option value="">Select Cat</option>
+                {{#each cats}}
+                <option value="{{this.cat_id}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+
+            <label for="cost">Cost</label>
+            <input type="number" step="0.01" id="cost" name="cost" placeholder="Enter Cost"/>
+
+            <input type="submit" value="Add"/>
+        </fieldset>
+    </form>
+        <script src="./js/add_cat_bed.js"></script>
+
+ 
+    {{! Search by Cat Bed Id}}
+        <form class="form" id="search-cat-bed-html" method='GET' action='/cat_beds'>
+        <h2>Search</h2>
+        <fieldset>
+
+        <label for="input-cat-bed-id">Search by Cat Bed ID: </label>
+        <input type="number" name="cat_bed_id" id="input-cat-bed-id-html-search">
+
+        <input type="submit">
+
+        <a href='/cat_beds'><button>Reset</button></a>
+
+        </fieldset>
+    </form>
+
+    <!--Results Table-->
+    <table class="results-table" id="cat-bed-table">
+        <thead>
+        <caption>Cat Beds</caption>
+            <tr>
+                <th>Cat Bed ID</th>
+                <th>Type</th>
+                <th>Cat ID</th>
+                <th>Cost</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr data-value={{this.cat_bed_id}}>
+                <td>{{this.cat_bed_id}}</td>
+                <td>{{this.bed_type}}</td>
+                <td>{{this.cat_id}}</td>
+                <td>{{this.cost}}</td>
+                <td><button><a href="/cat_beds/{{this.cat_bed_id}}">Update</a></button></td>
+                <td><button onclick="deleteCatBed({{this.cat_bed_id}})">Delete</button></td>
+            </tr>
+            {{/each}}
+
+        </tbody>
+    </table>
+    <script src="./js/delete_cat_bed.js"></script>
+
+</body>
+</html>
